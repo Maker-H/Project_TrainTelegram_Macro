@@ -122,7 +122,7 @@ while is_reserved:
         try:
             standard_seat = driver.find_element(By.CSS_SELECTOR, f'#tableResult > tbody > tr:nth-child({select_train}) > td:nth-child(6) > a:nth-child(1) > img').click()
             print("예약되었습니다")
-            @todo 텔레그램에 예약되었다는 메세지 출력....
+            #TODO 텔레그램 전송
             is_reserved = False
             break
         except:
@@ -134,8 +134,3 @@ while is_reserved:
         driver.implicitly_wait(10)
     else:
         break
-    
-/**
- * @todo Take over the world
- * @body Humans are weak; Robots are strong. We must cleanse the world of the virus that is humanity.
- */
