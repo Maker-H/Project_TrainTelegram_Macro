@@ -122,7 +122,7 @@ while is_reserved:
         try:
             standard_seat = driver.find_element(By.CSS_SELECTOR, f'#tableResult > tbody > tr:nth-child({select_train}) > td:nth-child(6) > a:nth-child(1) > img').click()
             print("예약되었습니다")
-            @todo 텔레그램에 예약되었다는 메세지 출력
+            @todo 텔레그램에 예약되었다는 메세지 출력...
             is_reserved = False
             break
         except:
