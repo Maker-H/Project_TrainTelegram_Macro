@@ -45,12 +45,16 @@
     <br>
     * output : `타실 기차를 선택해주세요 ex) ktx, 새마을, 무궁화`
     * cmd_output : `/t 기차_타입`
+    <br>
+    * output : `상위 몇개의 기차를 타실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다`
+    * cmd_output : `/n 기차 개수`
 2. User gives program id, by using command
     * ex) `/h 7`
     * ex) `/d 1 4`
     * ex) `/s 동대구`
     * ex) `/e 서울`
     * ex) `/t ktx`
+    * ex) `/n 2`
 
 <br><br>
 
