@@ -1,26 +1,70 @@
-## 사용자 정보 설정
+# Requirments
 
-### 비밀번호 입력
-> 정확한 비밀번호가 입력될 때까지 계속 비밀번호 입력을 요구한다
-1. 텔레그램 봇이 비밀번호 입력을 요구한다
-2. 사용자는 `/pwd 텔레그램_챗봇_시작_비밀번호`로 비밀번호를 입력한다
+## Set User Info
 
-<br>
-
-### 사용자 정보 설정 요구 메세지 출력
-> 정확한 비밀번호가 입력되면 사용자 정보 설정을 요구한다
-
-* 명령어 : `/아이디 코레일_아이디` 형식으로 아이디를 입력하세요.
-* 명령어 : `/비번 코레일_비밀번호` 형식으로 아이디를 입력하세요.
+### Print message to get pwd to start conversation
+> Print requests repeatedly until program gets correct pwd. 
+1. Telegram Bot requests pwd to user
+    * output : `채팅방 비밀번호를 입력하세요`
+    * cmd_output : `/pwd 텔레그램_챗봇_시작_비밀번호` 
+2. User gives program pwd, by using command
+    * ex) `/pwd 1234` 
 
 <br>
 
-### 기차 예매 정보 설정 요구 메세지 출력
-> 기차 예매를 위한 정보 입력을 요구한다
+### Print message to get user info
+> If correct pwd for conversation is entered, ChatBot requires to set user info 
+1. Telegram Bot requests id and pwd to get ticket by using user account
+    * output : `코레일 아이디(회원번호)를 입력하세요`
+    * cmd_output : `/아이디 코레일_아이디`
+    <br>
+    * output : `코레일 비밀번호를 입력하세요` 
+    * cmd_output : `/비번 코레일_비밀번호`
+2. User gives program id, by using command
+    * `/아이디 5323414` 
+    * `/비번 5323414` 
 
-* 명령어 : `/h 기차_시작_시간` ex) `/h 7`형식으로 출발 기차 시간을 입력하세요
-* 명령어 : `/d 기차_시작_월_일` ex) `/d 1 4` 형식으로 출발 기차 월과 일을 입력하세요
-* 명령어 : `/s 기차_출발역` `/s 동대구`형식으로 출발역를 입력하세요
-* 명령어 : `/e 기차_도착역` `/e 서울`형식으로 도착역을 입력하세요
+<br>
 
+### Print message to get detail information for reservation
+> Get information for train reservations
+1. Telegram Bot requests date, time, departure station, arrival station
+    * output : `출발 기차 날짜를 입력하세요`
+    * cmd_output : `/h 기차_시작_시간`
+    <br>
+    * output : `출발 기차 시간을 입력하세요`
+    * cmd_output : `/d 기차_시작_월_일`
+    <br>
+    * output : `출발역을 입력하세요` 
+    * cmd_output : `/s 기차_출발역`
+    <br>
+    * output : `도착역을 입력하세요` 
+    * cmd_output : `/e 기차_도착역`
+    <br>
+    * output : `타실 기차를 선택해주세요 ex) ktx, 새마을, 무궁화`
+    * cmd_output : `/t 기차_타입`
+2. User gives program id, by using command
+    * ex) `/h 7`
+    * ex) `/d 1 4`
+    * ex) `/s 동대구`
+    * ex) `/e 서울`
+    * ex) `/t ktx`
+
+<br><br>
+
+## Features
+
+### Show list of available trains
+> Based on information that user entered, program shows available day schedule of starts from hour that user enterd 
+
+<br>
+
+### Starts reservation
+> Based on information that user enterd, program runs repeatedly to get cancelation ticket. 
+
+* cmd_output : `/예매시작` 
+
+<br>
+### Show list of command
+> If user wants to modify user inforamation or info for reservation, user may forget chatbot command. In that case feature that shows list of command could help user to modify
 
