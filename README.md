@@ -58,16 +58,16 @@
 
 ### Show list of available trains
 > Based on information that user entered, program shows available day schedule of starts from hour that user enterd 
-
+* input : `/기차목록` 
 <br>
 
 ### Starts reservation
 > Based on information that user enterd, program runs repeatedly to get cancelation ticket. 
-
-* cmd_output : `/예매시작` 
+* input : `/예매시작` 
 
 <br>
 
 ### Show list of command
 > If user wants to modify user inforamation or info for reservation, user may forget chatbot command. In that case feature that shows list of command could help user to modify
-
+* output : `언제나 명령어를 보기 위해서는 /명령어를 입력하세요`
+* input : `/명령어` 
