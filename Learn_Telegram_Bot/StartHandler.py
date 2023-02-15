@@ -1,6 +1,7 @@
 import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+import pwd_token
 
 # log when thigs don't work as expected
 logging.basicConfig(
@@ -19,7 +20,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     # create an Application object
-    application = ApplicationBuilder().token('').build()
+    application = ApplicationBuilder().token(pwd_token.get_token()).build()
     
     # tell bot listen to /start commands
     start_handler = CommandHandler('start', start)

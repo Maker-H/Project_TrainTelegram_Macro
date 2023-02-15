@@ -39,7 +39,7 @@ async def caps(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 if __name__ == '__main__':
     # create an Application object
-    application = ApplicationBuilder().token('').build()
+    application = ApplicationBuilder().token('5856045997:AAGMrDNilRAlRNWeI-VzLg7_uWsqbD6t9BA').build()
     # tell bot listen to /start commands
     start_handler = CommandHandler('start', start)
     # eching bot

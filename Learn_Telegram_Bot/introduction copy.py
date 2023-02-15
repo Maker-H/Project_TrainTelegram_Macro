@@ -4,10 +4,11 @@ import telegram
 from telegram.ext import Updater, MessageHandler, filters
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
+import pwd_token
 
 
-token = ''
-id = 
+token = pwd_token.get_token()
+id = pwd_token.get_chatid()
 queue = []
 bot = telegram.Bot(token)
 
