@@ -21,6 +21,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # update.message.text brings what i enter in telegram
+    
     global tmp_answer    
     if update.message.text == 'global':
         await context.bot.send_message(chat_id=update.effective_chat.id, text=tmp_answer)
