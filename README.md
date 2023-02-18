@@ -71,7 +71,7 @@
 ## Features
 
 ### Show list of available trains
-> Based on information that user entered, program shows available day schedule of starts from hour that user enterd 
+> Based on information that user entered, program shows ten available train schedule starting from hour that user enterd 
 * input : `/기차목록` 
 <br>
 
