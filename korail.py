@@ -8,7 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.select import Select
 import time 
 import datetime
-import pwd_token # 아이디 받기
+import pwd_token # getting id
 
 # ---------------global variables--------------
 korail_id = pwd_token.get_korailid()
@@ -96,6 +96,11 @@ def get_station(user_input):
 def get_num_of_reservation(user_input):
     global num_of_reservation
     return int(user_input)
+
+
+#TODO: 기차타입 선택하기 새마을 고르면 ktx, 새마을 둘 다 선택
+# ktx 고르면 ktx만 선택
+# 기본은 전부 다 선택하는거
 
 
 #=============================================================================
@@ -191,8 +196,8 @@ def show_train_list():
 
         print(f'{train_departure} {train_arrival} {train_price} {train_type}  소요:{train_time}')
 
-show_train_list()
 
+# 기차 고를 때 기차 타입 선택해서 예매해게 하기
 def start_reservation():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     # driver = webdriver.Chrome("/Users/hs_/Downloads/chromedriver_mac_arm64/chromedriver") # Webdriver 파일의 경로를 입력
