@@ -22,6 +22,8 @@ korail_year = '2023'
 korail_month = '02'
 korail_day = '20'
 
+korail_train_types = []
+
 num_of_reservation = 2
 # ---------------global variables--------------
 
@@ -98,10 +100,19 @@ def get_num_of_reservation(user_input):
     return int(user_input)
 
 
-#TODO: 기차타입 선택하기 새마을 고르면 ktx, 새마을 둘 다 선택
-# ktx 고르면 ktx만 선택
-# 기본은 전부 다 선택하는거
+def get_train_type(user_input):
+    korail_train_types = user_input.split()
 
+def click_train_type():
+    global driver 
+    if not korail_train_types:
+        return
+    
+    for type in korail_train_types:
+        if type == 'ktx':
+            Select(driver.find_element(By.XPATH, '//*[@id="selGoTrainRa00"]')).click()
+        elif type == '새마을':
+            Select(driver.find_element(By.XPATH, '//*[@id="selGoTrainRa08"]')).click()
 
 #=============================================================================
 
@@ -145,7 +156,9 @@ def show_train_list():
     arr_stn.clear()
     arr_stn.send_keys(korail_end_station)
     driver.implicitly_wait(5)
-
+    
+    # select train type
+    click_train_type()
 
     # 출발 날짜 입력
     # https://velog.io/@rkfksh/Selenium-click%EB%90%98%EC%A7%80-%EC%95%8A%EB%8A%94-element%EB%A5%BC-javascript-%EB%AA%85%EB%A0%B9%EC%96%B4%EB%A1%9C-click%ED%95%98%EA%B8%B0
@@ -197,7 +210,7 @@ def show_train_list():
         print(f'{train_departure} {train_arrival} {train_price} {train_type}  소요:{train_time}')
 
 
-# 기차 고를 때 기차 타입 선택해서 예매해게 하기
+
 def start_reservation():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     # driver = webdriver.Chrome("/Users/hs_/Downloads/chromedriver_mac_arm64/chromedriver") # Webdriver 파일의 경로를 입력
@@ -238,6 +251,8 @@ def start_reservation():
     arr_stn.send_keys(korail_end_station)
     driver.implicitly_wait(5)
 
+    # Select train type
+    click_train_type()
 
     # 출발 날짜 입력
     # https://velog.io/@rkfksh/Selenium-click%EB%90%98%EC%A7%80-%EC%95%8A%EB%8A%94-element%EB%A5%BC-javascript-%EB%AA%85%EB%A0%B9%EC%96%B4%EB%A1%9C-click%ED%95%98%EA%B8%B0
