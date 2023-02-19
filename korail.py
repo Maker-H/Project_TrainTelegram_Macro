@@ -13,12 +13,16 @@ import pwd_token # 아이디 받기
 # ---------------global variables--------------
 korail_id = pwd_token.get_korailid()
 korail_pwd = pwd_token.get_korailpwd()
+
 korail_start_station = '동대구'
 korail_end_station = '구미'
+
 korail_hour = '19'
 korail_year = '2023'
-korail_month = '2'
-korail_day = '18'
+korail_month = '02'
+korail_day = '20'
+
+num_of_reservation = 2
 # ---------------global variables--------------
 
 
@@ -88,6 +92,13 @@ def get_station(user_input):
     korail_end_station = stations[1]
 
 
+
+def get_num_of_reservation(user_input):
+    global num_of_reservation
+    return int(user_input)
+
+
+#=============================================================================
 
 def show_train_list():
 
@@ -159,44 +170,29 @@ def show_train_list():
     trains = driver.find_elements(By.CSS_SELECTOR, '#tableResult > tbody > tr')
 
     for train in range(1, len(trains)*2 + 1, 2):
-        
-        for train_one_sec in range(3, 9):
-            train_info = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child({train_one_sec})').text.replace('\n', ' ').replace('-', '')
-            print(train_info, end=" ")
+    
+        train_departure = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(3)').text.replace('\n', ' ').replace('-', '').replace('(1량)', '')
+        train_arrival = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(4)').text.replace('\n', ' ').replace('-', '').replace('(1량)', '')
+
         # price    
-        train_price = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td.guide365 > div > strong').text.replace('\n', ' ')
+        train_price = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td.guide365 > div > strong').text.replace('\n', '')
         
+
+        tmp = train_price.split()
+        if len(tmp) != 1:
+            train_price = tmp[-1]
+
         train_time = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(14)').text.replace('\n', ' ')
 
-        print(f'{train_info} {train_price} 소요시간:{train_time}')
+        train_type = driver.find_element(By.CSS_SELECTOR, f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(2)').get_attribute('title')
+        
+        if train_type == '':
+            train_type = '새마을호'
 
+        print(f'{train_departure} {train_arrival} {train_price} {train_type}  소요:{train_time}')
 
-get_date(input("월"))
-get_hour(input("시간"))
 show_train_list()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#---------------------------------------------------------------------
 def start_reservation():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     # driver = webdriver.Chrome("/Users/hs_/Downloads/chromedriver_mac_arm64/chromedriver") # Webdriver 파일의 경로를 입력
@@ -204,7 +200,7 @@ def start_reservation():
     driver.get(url) # 이동을 원하는 페이지 주소 입력
     driver.implicitly_wait(15) # 페이지 다 뜰 때 까지 기다림
 
-    # 아이디 비밀번호 입력
+    # Enter korail id and pwd
     driver.find_element(By.ID, 'txtMember').send_keys(korail_id) # 회원번호
     driver.find_element(By.ID, 'txtPwd').send_keys(korail_pwd) # 비밀번호
 
@@ -212,7 +208,7 @@ def start_reservation():
     driver.find_element(By.XPATH, '//*[@id="loginDisplay1"]/ul/li[3]/a/img').click()
     driver.implicitly_wait(10)
 
-    # 예매 페이지로 이동
+    # Goto reservation site
     url = 'https://www.letskorail.com/ebizprd/EbizPrdTicketpr21100W_pr21110.do'
     driver.get(url) # 이동을 원하는 페이지 주소 입력
     driver.implicitly_wait(15) # 페이지 다 뜰 때 까지 기다림
@@ -225,13 +221,13 @@ def start_reservation():
     driver.close()
     driver.switch_to.window(main[0])
 
-    #출발지 입력
+    # Enter departure station
     dep_stn = driver.find_element(By.ID, 'start')
     dep_stn.clear() 
     dep_stn.send_keys(korail_start_station)
     driver.implicitly_wait(5)
 
-    # 도착지 입력
+    # Enter arrival station
     arr_stn = driver.find_element(By.ID, 'get')
     arr_stn.clear()
     arr_stn.send_keys(korail_end_station)
@@ -245,46 +241,26 @@ def start_reservation():
     # time.sleep(1)
     # driver.find_element(By.XPATH, '/html/body/div/div[2]/table/tbody/tr[2]/td[1]/div/div/table/tbody/tr[4]/td[4]').click()
 
-
-    # 출발 월 입력
+    # enter departure date
     Select(driver.find_element(By.ID,"s_year")).select_by_value(korail_year)
-
-    # 출발 월 입력
     Select(driver.find_element(By.ID,"s_month")).select_by_value(korail_month)
-
-    # 출발 일 입력 
     Select(driver.find_element(By.ID,"s_day")).select_by_value(korail_day)
 
-    # 출발 시간 입력
+    # enter departure date
     Select(driver.find_element(By.ID,"s_hour")).select_by_value(korail_hour)
     # Select(driver.find_element(By.ID,"time")).select_by_visible_text(str(korail_hour))
 
 
-    # 조회하기 클릭
+    # start searching
     driver.find_element(By.XPATH,'//*[@id="center"]/form/div/p/a/img').click()
     driver.implicitly_wait(5)
     time.sleep(2)
 
 
-    # 기차들 출력
-    trains = driver.find_elements(By.CSS_SELECTOR, '#tableResult > tbody > tr')
-
-    for train in range(1, len(trains)*2 + 1, 2):
-        
-        for train_one_sec in range(3, 9):
-            train_info = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child({train_one_sec})').text.replace('\n', ' ').replace('-', '')
-            print(train_info, end=" ")
-        # 가격    
-        train_price = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td.guide365 > div > strong').text.replace('\n', ' ')
-        
-        train_time = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(14)').text.replace('\n', ' ')
-
-        print(train_info, train_price, train_time)
-
-    # 상위 2개 기차만 예매 
+    # Start Resevation
     is_reserved = True
     while is_reserved: 
-        for select_train in range(1, 5, 2):
+        for select_train in range(1, 5, num_of_reservation):
 
             try:
                 standard_seat = driver.find_element(By.CSS_SELECTOR, f'#tableResult > tbody > tr:nth-child({select_train}) > td:nth-child(6) > a:nth-child(1) > img').click()
