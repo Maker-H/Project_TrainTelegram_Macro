@@ -46,6 +46,7 @@
     
     <br>
     
+    * If user select 새마을, program will reserve at least 새마을. This means program includes higher level train.  
     * output : `타실 기차를 선택해주세요 ex) ktx, 새마을, 무궁화`
     * cmd_output : `/t 기차_타입`
     
