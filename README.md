@@ -29,15 +29,13 @@
 1. Telegram Bot requests date, time, departure station, arrival station
     * If user doesn't enter date, date will automatically set as today
     * output : `출발 기차를 년/월/일로 입력하세요. '/'를 꼭 삽입하여야 합니다. /d 만 입력하시면 오늘 날짜로 설정됩니다`
-    * cmd_output : `/d 년/월/일`
-    * cmd_output : `/d`
+    * cmd_output : `/d 년/월/일` or `/d`
     
     <br>
     
     * If user doesn't enter hour, hour will automatically set as current hour
     * output : `출발 기차 시간을 입력하세요`
-    * cmd_output : `/h 기차_시작_시간`
-    * cmd_output : `/h`
+    * cmd_output : `/h 기차_시작_시간` or `/h`
     
     <br>
     
@@ -56,16 +54,14 @@
     * cmd_output : `/n 기차 개수`
 2. User gives program id, by using command
     * hour example
-      * ex) `/h 7`
-      * ex) `/h`
+      * ex) `/h 7`, `/h`
     * date example
-      * ex) `/d 23/1/1`
-      * ex) `/d`
+      * ex) `/d 23/1/1`, `/d`
     * other example
-    * ex) `/s 동대구`
-    * ex) `/e 서울`
-    * ex) `/t ktx`
-    * ex) `/n 2`
+    * `/s 동대구`
+    * `/e 서울`
+    * `/t ktx`
+    * `/n 2`
 
 <br><br>
 
