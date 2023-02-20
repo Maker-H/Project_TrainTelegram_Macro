@@ -125,5 +125,5 @@ if __name__ == '__main__':
     application.add_handler(korail_start_reservation_handler)
     application.add_handler(show_command_handler)
 
-    # runs bot until i hit ctrl+c
+    # runs bot until I hit ctrl+c
     application.run_polling()
