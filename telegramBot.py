@@ -5,15 +5,16 @@ from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHan
 import pwd_token
 import korail
 
-cmd = '/pwd 텔레그램_챗봇_시작_비밀번호 \n ex) /pwd 1234 ' + '\n' 
-+ '/id 코레일_아이디 비밀번호 \n /id 139123 1234qqe ' + '\n'
-+ '/d 년/월/일 '/'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다) \n /d 23/12/31 ' + '\n'
-+ '/h 기차_시작_시간 (/h 만 입력하면 지금 시간으로 입력됩니다) \n /h 7 ' + '\n'
-+ '/s 기차_출발역 기차_도착역  \n /s 동대구 서울 ' + '\n'
-+ '/t 기차_타입1 or 기차_타입2 ex) ktx, 새마을, 무궁화 (/s 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t' + '\n'
-+ '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2' + '\n'
+cmd = '/pwd 텔레그램_챗봇_시작_비밀번호 \n ex) /pwd 1234 \n' \
++ '/id 코레일_아이디 비밀번호 \n /id 139123 1234qqe \n' \
++ '/d 년/월/일 \'/\'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다)\n /d 23/12/31 \n' \
++ '/h 기차_시작_시간 (/h 만 입력하면 지금 시간으로 입력됩니다) \n /h 7 \n' \
++ '/s 기차_출발역 기차_도착역  \n /s 동대구 서울 \n' \
++ '/t 기차_타입1 or 기차_타입2 ex) ktx, 새마을, 무궁화 (/s 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t \n' \
++ '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n' \
++ '/list 는 기차목록을 보여주고 /start 를 입력하면 예매를 시작합니다'
 
-cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /기차목록, /예매시작, /명령어, /명'
+cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /simcmd'
 
 
 
@@ -74,23 +75,23 @@ async def korail_num_of_reservation(update: Update, context: ContextTypes.DEFAUL
 
 # Show list of trains
 async def korail_show_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    korail.show_train_list()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='설정되었습니다')
+    trains = korail.show_train_list()
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=trains)
 
 
 # Start reservation
 async def korail_start_reservation(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    korail.start_reservation()
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='설정되었습니다')
+    result = korail.start_reservation()
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=result)
 
 # Show handler list
 async def show_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /명령어 를, 간단히 명령어를 보고 싶다면 /명 을 입력하세요')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /simcmd 을 입력하세요')
     await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd)
 
 # Show simple handler list
 async def show_simple_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /명령어 를, 간단히 명령어를 보고 싶다면 /명 을 입력하세요')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /simcmd 을 입력하세요')
     await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd_simple)
 
 
@@ -101,7 +102,6 @@ if __name__ == '__main__':
 
 
     # tell bot listen to /start commands
-    start_handler = CommandHandler('start', start)
     caps_handler = CommandHandler('caps', caps)
     korail_id_pwd_handler = CommandHandler('id', korail_id_pwd)
     korail_date_handler = CommandHandler('d', korail_date)
@@ -109,12 +109,11 @@ if __name__ == '__main__':
     korail_station_handler = CommandHandler('s', korail_station)
     korail_train_type_handler = CommandHandler('t', korail_train_type)
     korail_num_of_reservation_handler = CommandHandler('n', korail_num_of_reservation)
-    korail_show_list_handler = CommandHandler('기차목록', korail_show_list)
-    korail_start_reservation_handler = CommandHandler('예매시작', korail_start_reservation)
-    show_command_handler = CommandHandler('명령어', show_command)
+    korail_show_list_handler = CommandHandler('list', korail_show_list)
+    korail_start_reservation_handler = CommandHandler('start', korail_start_reservation)
+    show_command_handler = CommandHandler('cmd', show_command)
 
     
-    application.add_handler(start_handler)
     application.add_handler(caps_handler)
     application.add_handler(korail_id_pwd_handler)
     application.add_handler(korail_date_handler)

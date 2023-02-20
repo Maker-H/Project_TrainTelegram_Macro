@@ -195,6 +195,7 @@ def show_train_list():
     # print trains
     trains = driver.find_elements(By.CSS_SELECTOR, '#tableResult > tbody > tr')
 
+    output_trains = ''
     for train in range(1, len(trains)*2 + 1, 2):
     
         train_departure = driver.find_element(By.CSS_SELECTOR,f'#tableResult > tbody > tr:nth-child({train}) > td:nth-child(3)').text.replace('\n', ' ').replace('-', '').replace('(1량)', '')
@@ -215,7 +216,9 @@ def show_train_list():
         if train_type == '':
             train_type = '새마을호'
 
-        print(f'{train_departure} {train_arrival} {train_price} {train_type}  소요:{train_time}')
+        output_trains += f'{train_departure} {train_arrival} {train_price} {train_type}  소요:{train_time} \n'
+    
+    return output_trains
 
 
 
@@ -292,7 +295,7 @@ def start_reservation():
 
             try:
                 standard_seat = driver.find_element(By.CSS_SELECTOR, f'#tableResult > tbody > tr:nth-child({select_train}) > td:nth-child(6) > a:nth-child(1) > img').click()
-                print("예약되었습니다")
+                return '예약되었습니다'
                 is_reserved = False
                 break
             except:
