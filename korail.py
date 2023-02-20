@@ -11,8 +11,8 @@ import datetime
 import pwd_token # getting id
 
 # ---------------global variables--------------
-korail_id = pwd_token.get_korailid()
-korail_pwd = pwd_token.get_korailpwd()
+korail_id = ''
+korail_pwd = ''
 
 korail_start_station = '동대구'
 korail_end_station = '구미'
@@ -27,12 +27,20 @@ korail_train_types = []
 num_of_reservation = 2
 # ---------------global variables--------------
 
+def set_id(user_input):
+    global korail_id
+    global korail_pwd
+
+    tmp = user_input.split()
+
+    korail_id = tmp[0]
+    korail_pwd = tmp[1]
 
 TODAY = datetime.datetime.now()
 
     #23/02/23     #23/2/23    # 2/23    
     # # If year is not assigned, set default year by current year
-def get_date(date_with_year):
+def set_date(date_with_year):
     global korail_day
     global korail_month
     global korail_year
@@ -68,7 +76,7 @@ def get_date(date_with_year):
         korail_day = hour_day_month_format(TODAY.day)
 
 
-def get_hour(input_hour):
+def set_hour(input_hour):
     global korail_hour
     if input_hour == '':
         korail_hour = hour_day_month_format(int(TODAY.hour))
@@ -85,7 +93,7 @@ def hour_day_month_format(int_date):
         return str(int_date)
 
 
-def get_station(user_input):
+def set_station(user_input):
     global korail_start_station
     global korail_end_station
 
@@ -95,12 +103,12 @@ def get_station(user_input):
 
 
 
-def get_num_of_reservation(user_input):
+def set_num_of_reservation(user_input):
     global num_of_reservation
     return int(user_input)
 
 
-def get_train_type(user_input):
+def set_train_type(user_input):
     korail_train_types = user_input.split()
 
 def click_train_type():

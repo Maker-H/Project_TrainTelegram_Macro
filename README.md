@@ -20,7 +20,7 @@
     * output : `코레일 아이디(회원번호)와 비밀번호를 입력하세요`
     * cmd_output : `/id 코레일_아이디 비밀번호`
 2. User gives program id, by using command
-    * `/id 5323414 1234qqq` 
+    * `/id 139123 1234qqe` 
 
 <br>
 
@@ -60,8 +60,7 @@
     * train type example
       * ex) `/t ktx 새마을`, `/t ktx`, `/t`
     * other example
-    * `/s 동대구`
-    * `/e 서울`
+    * `/s 동대구 서울`
     * `/t ktx`
     * `/n 2`
 
