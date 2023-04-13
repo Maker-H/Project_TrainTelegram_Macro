@@ -14,7 +14,7 @@ cmd = '/pwd 텔레그램_챗봇_시작_비밀번호 \n ex) /pwd 1234 \n' \
 + '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n' \
 + '/list 는 기차목록을 보여주고 /start 를 입력하면 예매를 시작합니다'
 
-cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /simcmd'
+cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /sim'
 
 
 
@@ -40,13 +40,13 @@ async def caps(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # korail ID/PWD
 async def korail_id_pwd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     korail.set_id(' '.join(context.args))
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='설정되었습니다')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f'설정되었습니다')
 
 
 # Setting train date
 async def korail_date(update: Update, context: ContextTypes.DEFAULT_TYPE):
     korail.set_date(' '.join(context.args))
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='설정되었습니다')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f'설정되었습니다')
 
 
 # Setting departure hour
@@ -95,7 +95,6 @@ async def show_simple_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd_simple)
 
 
-
 if __name__ == '__main__':
     # create an Application object
     application = ApplicationBuilder().token(pwd_token.get_token()).build()
@@ -112,6 +111,7 @@ if __name__ == '__main__':
     korail_show_list_handler = CommandHandler('list', korail_show_list)
     korail_start_reservation_handler = CommandHandler('start', korail_start_reservation)
     show_command_handler = CommandHandler('cmd', show_command)
+    show_simple_command_handler = CommandHandler('sim', show_simple_command)
 
     
     application.add_handler(caps_handler)
@@ -124,6 +124,8 @@ if __name__ == '__main__':
     application.add_handler(korail_show_list_handler)
     application.add_handler(korail_start_reservation_handler)
     application.add_handler(show_command_handler)
+    application.add_handler(show_simple_command_handler)
+    
 
     # runs bot until I hit ctrl+c
     application.run_polling()
