@@ -86,13 +86,28 @@ async def korail_start_reservation(update: Update, context: ContextTypes.DEFAULT
 
 # Show handler list
 async def show_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /simcmd 을 입력하세요')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
     await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd)
 
 # Show simple handler list
 async def show_simple_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /simcmd 을 입력하세요')
+    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
     await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd_simple)
+
+
+# async def echo_settings(update.effective_chat.id, context.args):
+    # return await context.bot.send_message(chat_id=update.effective_chat.id, text='설정되었습니다')
+    
+
+
+def parser(user_input_list):
+    words = user_input_list.strip('[', ']').split(',')
+    
+    str = ''
+    for word in words:
+        str = str + word +' '
+
+    return str
 
 
 if __name__ == '__main__':
@@ -125,7 +140,7 @@ if __name__ == '__main__':
     application.add_handler(korail_start_reservation_handler)
     application.add_handler(show_command_handler)
     application.add_handler(show_simple_command_handler)
-    
+
 
     # runs bot until I hit ctrl+c
     application.run_polling()
