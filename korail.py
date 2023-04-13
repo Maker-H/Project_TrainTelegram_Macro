@@ -49,19 +49,18 @@ def set_date(date_with_year):
     # Have to convert to int because of date_format
     input_date = date_with_year.strip()
     if input_date != '':
-        input_date = list(map(int, date_with_year.split('/')))
+        input_date = list(date_with_year.split('/'))
     
     # With year
     if len(input_date) == 3:
-        
         # Set year
         if len(input_date[0]) == 2:
-            korail_year = '20' + str(input_date[0])
+            korail_year = '20' + input_date[0]
         else:
-            korail_year = str(input_date[0])
+            korail_year = input_date[0]
 
-        korail_month = hour_day_month_format(input_date[1])
-        korail_day = hour_day_month_format(input_date[2])
+        korail_month = hour_day_month_format(int(input_date[1]))
+        korail_day = hour_day_month_format(int(input_date[2]))
     
     #With month and date
     elif len(input_date) == 2:
@@ -104,8 +103,9 @@ def set_station(user_input):
 
 
 def set_num_of_reservation(user_input):
-    global num_of_reservation
-    return int(user_input)
+    global num_of_reservation 
+    num_of_reservation = int(user_input)
+
 
 
 def set_train_type(user_input):
