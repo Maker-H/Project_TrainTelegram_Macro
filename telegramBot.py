@@ -5,16 +5,18 @@ from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHan
 import pwd_token
 import korail
 
-cmd = {
-    '/id 코레일_아이디 비밀번호': '/id 139123 1234qqe',
-    '/d 년/월/일': '\'/\'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다)\n /d 23/12/31',
-    '/h 기차_시작_시간': '(/h 만 입력하면 지금 시간으로 입력됩니다)\n /h 7',
-    '/s 기차_출발역 기차_도착역': '/s 동대구 서울 ',
-    '/t 기차_타입1 or 기차_타입2': 'ex) ktx, 새마을, 무궁화 (/t 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t',
-    '/n 기차 개수': '(상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n',
-    '/list': '기차 목록을 보여줍니다',
-    '/start': '예매를 시작합니다',
-}
+cmd = '/id 코레일_아이디 비밀번호 \n /id 139123 1234qqe \n' \
++ '\n' \
++ '/d 년/월/일 \'/\'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다)\n /d 23/12/31 \n' \
++ '\n' \
++ '/h 기차_시작_시간 (/h 만 입력하면 지금 시간으로 입력됩니다) \n /h 7 \n' \
++ '\n' \
++ '/s 기차_출발역 기차_도착역  \n /s 동대구 서울 \n' \
++ '\n' \
++ '/t 기차_타입1 or 기차_타입2 ex) ktx, 새마을, 무궁화 (/t 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t \n' \
++ '\n' \
++ '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n' \
++ '/list 는 기차목록을 보여주고 /start 를 입력하면 예매를 시작합니다'
 
 cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /sim'
 
@@ -38,19 +40,19 @@ async def send_message(update: Update, context: ContextTypes.DEFAULT_TYPE, messa
     await context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 
-async def set_korail_info(update: Update, context: ContextTypes.DEFAULT_TYPE, func, args):
-    message_str = func(' '.join(context.args))
-    await send_message(update, context, f'{parse_args(message_str)} 설정되었습니다')
+async def set_korail_info(update: Update, context: ContextTypes.DEFAULT_TYPE, func):
+    func(' '.join(context.args))
+    await send_message(update, context, f'{parse_args(context.args)} 설정되었습니다')
 
 
 def parse_args(args):
-    words = args.strip('[', ']').split(',')
+    words = str(args).strip('[').strip(']').split(',')
     
-    str = ''
+    new_word = ''
     for word in words:
-        str = str + word +' '
+        new_word = new_word + word +' '
 
-    return str
+    return new_word
 ################
 
 
