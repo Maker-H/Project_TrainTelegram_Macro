@@ -5,21 +5,6 @@ from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHan
 import pwd_token
 import korail
 
-cmd = '/id 코레일_아이디 비밀번호 \n /id 139123 1234qqe \n' \
-+ '\n' \
-+ '/d 년/월/일 \'/\'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다)\n /d 23/12/31 \n' \
-+ '\n' \
-+ '/h 기차_시작_시간 (/h 만 입력하면 지금 시간으로 입력됩니다) \n /h 7 \n' \
-+ '\n' \
-+ '/s 기차_출발역 기차_도착역  \n /s 동대구 서울 \n' \
-+ '\n' \
-+ '/t 기차_타입1 or 기차_타입2 ex) ktx, 새마을, 무궁화 (/t 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t \n' \
-+ '\n' \
-+ '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n' \
-+ '/list 는 기차목록을 보여주고 /start 를 입력하면 예매를 시작합니다'
-
-cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /sim'
-
 
 
 # log when thigs don't work as expected
@@ -101,15 +86,30 @@ async def korail_start_reservation(update: Update, context: ContextTypes.DEFAULT
 
 # Show handler list
 async def show_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
-    await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd)
+    cmd = '/id 코레일_아이디 비밀번호 \n /id 139123 1234qqe \n' \
+    + '\n' \
+    + '/d 년/월/일 \'/\'를 꼭 삽입하여야 합니다. (/d 만 입력하시면 오늘 날짜로 설정됩니다)\n /d 23/12/31 \n' \
+    + '\n' \
+    + '/h 기차_시작_시간 (/h 만 입력하면 지금 시간으로 입력됩니다) \n /h 7 \n' \
+    + '\n' \
+    + '/s 기차_출발역 기차_도착역  \n /s 동대구 서울 \n' \
+    + '\n' \
+    + '/t 기차_타입1 or 기차_타입2 ex) ktx, 새마을, 무궁화 (/t 만 입력하시면 전체로 설정됩니다) \n /t ktx 새마을, /t ktx, /t \n' \
+    + '\n' \
+    + '/n 기차 개수 (상위 몇개의 기차를 예매하실지 선택해주세요. 2개를 선택하시면 입력하신 시간 기준 가까운 기차 2개 중 1개가 예매됩니다)\n /n 2 \n' \
+    + '/list 는 기차목록을 보여주고 /start 를 입력하면 예매를 시작합니다'
+
+    await send_message(update, context, '다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
+    await send_message(update, context, cmd)
 
 
 # Show simple handler list
 async def show_simple_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text='다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
-    await context.bot.sendMessage(chat_id=update.effective_chat.id, text=cmd_simple)
+    cmd_simple = '/id(korail id pwd), /h(hour), /s(station1 station2), /t(train type), /n(number of reservation), /list, /start, /cmd, /sim'
 
+    await send_message(update, context, '다시 명령어를 보고 싶으시면 /cmd 를, 간단히 명령어를 보고 싶다면 /sim 을 입력하세요')
+    await send_message(update, context, cmd_simple)
+    
 
 
 
